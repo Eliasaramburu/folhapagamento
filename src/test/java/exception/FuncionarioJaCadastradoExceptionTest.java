@@ -1,6 +1,7 @@
 package exception;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,9 +20,9 @@ class FuncionarioJaCadastradoExceptionTest {
     @Test
     @DisplayName("É uma exceção verificada (checked), obrigando o tratamento")
     void eExcecaoVerificada() {
-        FuncionarioJaCadastradoException e = new FuncionarioJaCadastradoException("x");
-        assertTrue(e instanceof Exception);
-        assertTrue(!(e instanceof RuntimeException));
+        Class<?> tipo = FuncionarioJaCadastradoException.class;
+        assertTrue(Exception.class.isAssignableFrom(tipo));
+        assertFalse(RuntimeException.class.isAssignableFrom(tipo));
     }
 
     @Test
