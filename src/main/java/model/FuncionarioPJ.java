@@ -14,14 +14,8 @@ public class FuncionarioPJ extends Funcionario {
 
     public FuncionarioPJ(int codigo, String nome, String cpf, double valorPorProjeto, int quantidadeProjetos) {
         super(codigo, nome, cpf, 0.0);
-        if (Double.isNaN(valorPorProjeto) || Double.isInfinite(valorPorProjeto) || valorPorProjeto < 0) {
-            throw new DadosInvalidosException("O valor por projeto não pode ser negativo");
-        }
-        if (quantidadeProjetos < 0) {
-            throw new DadosInvalidosException("A quantidade de projetos não pode ser negativa");
-        }
-        this.valorPorProjeto = valorPorProjeto;
-        this.quantidadeProjetos = quantidadeProjetos;
+        this.valorPorProjeto = validarValor(valorPorProjeto);
+        this.quantidadeProjetos = validarQuantidade(quantidadeProjetos);
     }
 
     /** Remuneração = valor por projeto x quantidade de projetos. */
@@ -46,10 +40,7 @@ public class FuncionarioPJ extends Funcionario {
     }
 
     public void setValorPorProjeto(double valorPorProjeto) {
-        if (Double.isNaN(valorPorProjeto) || Double.isInfinite(valorPorProjeto) || valorPorProjeto < 0) {
-            throw new DadosInvalidosException("O valor por projeto não pode ser negativo");
-        }
-        this.valorPorProjeto = valorPorProjeto;
+        this.valorPorProjeto = validarValor(valorPorProjeto);
     }
 
     public int getQuantidadeProjetos() {
@@ -57,9 +48,17 @@ public class FuncionarioPJ extends Funcionario {
     }
 
     public void setQuantidadeProjetos(int quantidadeProjetos) {
+        this.quantidadeProjetos = validarQuantidade(quantidadeProjetos);
+    }
+
+    private static double validarValor(double valorPorProjeto) {
+        return exigirNaoNegativo(valorPorProjeto, "O valor por projeto não pode ser negativo");
+    }
+
+    private static int validarQuantidade(int quantidadeProjetos) {
         if (quantidadeProjetos < 0) {
             throw new DadosInvalidosException("A quantidade de projetos não pode ser negativa");
         }
-        this.quantidadeProjetos = quantidadeProjetos;
+        return quantidadeProjetos;
     }
 }

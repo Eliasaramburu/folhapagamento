@@ -1,7 +1,5 @@
 package model;
 
-import exception.DadosInvalidosException;
-
 /**
  * Funcionário comissionado: recebe salário-base mais um percentual de
  * comissão sobre o total de suas vendas. Sofre desconto de tributos
@@ -18,14 +16,8 @@ public class FuncionarioComissionado extends Funcionario implements Tributavel {
     public FuncionarioComissionado(int codigo, String nome, String cpf, double salarioBase,
                                    double percentualComissao, double totalVendas) {
         super(codigo, nome, cpf, salarioBase);
-        if (Double.isNaN(percentualComissao) || percentualComissao < 0 || percentualComissao > 100) {
-            throw new DadosInvalidosException("O percentual de comissão deve estar entre 0 e 100");
-        }
-        if (Double.isNaN(totalVendas) || Double.isInfinite(totalVendas) || totalVendas < 0) {
-            throw new DadosInvalidosException("O total de vendas não pode ser negativo");
-        }
-        this.percentualComissao = percentualComissao;
-        this.totalVendas = totalVendas;
+        this.percentualComissao = validarPercentual(percentualComissao);
+        this.totalVendas = validarVendas(totalVendas);
     }
 
     /** Comissão = total de vendas x percentual / 100. */
@@ -62,10 +54,7 @@ public class FuncionarioComissionado extends Funcionario implements Tributavel {
     }
 
     public void setPercentualComissao(double percentualComissao) {
-        if (Double.isNaN(percentualComissao) || percentualComissao < 0 || percentualComissao > 100) {
-            throw new DadosInvalidosException("O percentual de comissão deve estar entre 0 e 100");
-        }
-        this.percentualComissao = percentualComissao;
+        this.percentualComissao = validarPercentual(percentualComissao);
     }
 
     public double getTotalVendas() {
@@ -73,9 +62,14 @@ public class FuncionarioComissionado extends Funcionario implements Tributavel {
     }
 
     public void setTotalVendas(double totalVendas) {
-        if (Double.isNaN(totalVendas) || Double.isInfinite(totalVendas) || totalVendas < 0) {
-            throw new DadosInvalidosException("O total de vendas não pode ser negativo");
-        }
-        this.totalVendas = totalVendas;
+        this.totalVendas = validarVendas(totalVendas);
+    }
+
+    private static double validarPercentual(double percentualComissao) {
+        return exigirPercentual(percentualComissao, "O percentual de comissão deve estar entre 0 e 100");
+    }
+
+    private static double validarVendas(double totalVendas) {
+        return exigirNaoNegativo(totalVendas, "O total de vendas não pode ser negativo");
     }
 }

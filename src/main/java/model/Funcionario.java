@@ -147,9 +147,25 @@ public abstract class Funcionario implements Identificavel {
     }
 
     private static double validarSalarioBase(double salarioBase) {
-        if (Double.isNaN(salarioBase) || Double.isInfinite(salarioBase) || salarioBase < 0) {
-            throw new DadosInvalidosException("O salário-base não pode ser negativo");
+        return exigirNaoNegativo(salarioBase, "O salário-base não pode ser negativo");
+    }
+
+    /**
+     * Garante que o número é finito e não negativo; caso contrário lança
+     * {@link DadosInvalidosException} com a mensagem informada.
+     */
+    protected static double exigirNaoNegativo(double valor, String mensagem) {
+        if (Double.isNaN(valor) || Double.isInfinite(valor) || valor < 0) {
+            throw new DadosInvalidosException(mensagem);
         }
-        return salarioBase;
+        return valor;
+    }
+
+    /** Garante que o percentual está entre 0 e 100 (inclusive). */
+    protected static double exigirPercentual(double valor, String mensagem) {
+        if (Double.isNaN(valor) || valor < 0 || valor > 100) {
+            throw new DadosInvalidosException(mensagem);
+        }
+        return valor;
     }
 }

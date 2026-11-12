@@ -1,7 +1,5 @@
 package model;
 
-import exception.DadosInvalidosException;
-
 /**
  * Funcionário contratado pela CLT: recebe salário-base e adicional de benefícios.
  * Sofre desconto de tributos (modelo didático: 11% da remuneração).
@@ -15,10 +13,7 @@ public class FuncionarioCLT extends Funcionario implements Tributavel {
 
     public FuncionarioCLT(int codigo, String nome, String cpf, double salarioBase, double adicionalBeneficios) {
         super(codigo, nome, cpf, salarioBase);
-        if (Double.isNaN(adicionalBeneficios) || Double.isInfinite(adicionalBeneficios) || adicionalBeneficios < 0) {
-            throw new DadosInvalidosException("O adicional de benefícios não pode ser negativo");
-        }
-        this.adicionalBeneficios = adicionalBeneficios;
+        this.adicionalBeneficios = validarAdicional(adicionalBeneficios);
     }
 
     /** Remuneração = salário-base + adicional de benefícios. */
@@ -48,9 +43,10 @@ public class FuncionarioCLT extends Funcionario implements Tributavel {
     }
 
     public void setAdicionalBeneficios(double adicionalBeneficios) {
-        if (Double.isNaN(adicionalBeneficios) || Double.isInfinite(adicionalBeneficios) || adicionalBeneficios < 0) {
-            throw new DadosInvalidosException("O adicional de benefícios não pode ser negativo");
-        }
-        this.adicionalBeneficios = adicionalBeneficios;
+        this.adicionalBeneficios = validarAdicional(adicionalBeneficios);
+    }
+
+    private static double validarAdicional(double adicionalBeneficios) {
+        return exigirNaoNegativo(adicionalBeneficios, "O adicional de benefícios não pode ser negativo");
     }
 }
