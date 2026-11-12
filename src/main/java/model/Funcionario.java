@@ -85,6 +85,11 @@ public abstract class Funcionario implements Identificavel {
         return String.format(PT_BR, "R$ %,.2f", valor);
     }
 
+    /** Formata um percentual com duas casas, ex.: {@code 5,00%}. */
+    protected static String formatarPercentual(double percentual) {
+        return String.format(PT_BR, "%.2f%%", percentual);
+    }
+
     // ---------- getters e setters ----------
 
     @Override
