@@ -3,8 +3,7 @@
 Sistema em Java, executado no console, que cadastra funcionários de três categorias (CLT, PJ e Comissionado), calcula suas remunerações e gera relatório e total da folha de pagamento. Desenvolvido com **Programação Orientada a Objetos**, arquitetura em **camadas** e **TDD** (JUnit 5).
 
 **Integrantes:**
-- _Nome Completo 1_
-- _Nome Completo 2_
+- Joel Elias Aramburu da Silva
 
 ## Funcionalidades
 
